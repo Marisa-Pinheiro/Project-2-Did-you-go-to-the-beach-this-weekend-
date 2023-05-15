@@ -19,6 +19,8 @@ router.get("/beaches", (req, res) => {
       console.log(results);
 
       // Pass into a view
+      res.render("beaches/listofbeaches.hbs", { results });
+      
     })
     .catch((error) => {
       console.error("Geocoding request failed:", error);
