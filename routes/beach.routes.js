@@ -28,4 +28,29 @@ router.get("/beaches", (req, res) => {
     });
 });
 
+// GET route to retrieve and display details of a specific beach
+router.get('/listofbeaches/:beachId', (req,res)=>{
+  // Destructuring the req.params.beachId
+  const {beachId} = req.params; 
+
+  // Feedback regarding to req.params.beachId
+  //console.log('The Id from the URL is:', beachId);
+
+  async function findBeachFromAPI(){
+   try{
+       // Finding the Beach via Id
+       let foundBeach = await Beach.findById(beachId);
+       // Feedback Regarding the found Beach
+       // console.log(foundBeach;
+       // Render 
+       res.render('beaches/beachdetails.hbs', {beach: foundBeach});
+   }
+   catch(error){
+       console.log(error);
+   }
+  }
+
+  findBeachFromAPI();
+})
+
 module.exports = router;
