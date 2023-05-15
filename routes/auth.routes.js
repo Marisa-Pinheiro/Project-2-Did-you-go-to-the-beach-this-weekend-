@@ -1,5 +1,6 @@
-const express = require("express");
-const router = express.Router();
+// Require Express Method that helps us to create Routes
+// 2nd way of requiring Router 
+const {Router} = require('express');
 
 // ℹ️ Handles password encryption
 const bcrypt = require("bcrypt");
@@ -11,13 +12,15 @@ const saltRounds = 10;
 // Require the User model in order to interact with the database
 const User = require("../models/User.model");
 
+const router = new Router();
+
 // Require necessary (isLoggedOut and isLiggedIn) middleware in order to control access to specific routes
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
 // GET /auth/signup
 router.get("/signup", isLoggedOut, (req, res) => {
-  res.render("auth/signup");
+  res.render("auth/signup.hbs");
 });
 
 // POST /auth/signup
