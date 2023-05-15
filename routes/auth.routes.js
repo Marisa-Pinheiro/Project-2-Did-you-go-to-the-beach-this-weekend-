@@ -42,8 +42,8 @@ router.post("/signup", isLoggedOut, (req, res) => {
     return;
   }
 
-  //   ! This regular expression checks password for special characters and minimum length
-  /*
+  //! This regular expression checks password for special characters and minimum length
+  
   const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
   if (!regex.test(password)) {
     res
@@ -53,7 +53,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
     });
     return;
   }
-  */
+
 
   // Create a new user - start by hashing the password
   bcrypt
@@ -141,6 +141,8 @@ router.post("/login", isLoggedOut, (req, res, next) => {
     .catch((err) => next(err));
 });
 
+
+
 // GET /auth/logout
 router.get("/logout", isLoggedIn, (req, res) => {
   req.session.destroy((err) => {
@@ -152,5 +154,7 @@ router.get("/logout", isLoggedIn, (req, res) => {
     res.redirect("/");
   });
 });
+
+
 
 module.exports = router;
