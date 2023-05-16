@@ -2,102 +2,107 @@
 const express = require("express");
 const router = express.Router();
 
-
 //const axios = require("axios");
 const Beach = require("../models/Beach.model");
-  
-// CRUD 
+
+// CRUD
 // GET => render the form to create a new beach
-router.get('/new', (req, res) => {
-    res.render('beaches/new-beach.hbs');
-  });
-  
-  // POST => to create new restaurant and save it to the DB
-  router.post('/new', (req, res) => {
-    // add location object here
-      const {longitude, latitude, rate, activity, name, description} = req.body;
-  
-      async function createBeach(){
-          try {
-              let newBeach = await Beach.create({
-                  name, description, rate, activity, location: {
-                      type: 'Point',
-                      coordinate: [longitude, latitude]
-                  }
-              });
-              console.log(`${newBeach.name}`)
-              res.redirect('/beaches');
-          }
-          catch(error){
-          console.log(error)
-          }
-      }
-      createBeach();
-    });
- 
-  
+router.get("/new", (req, res) => {
+  res.render("beaches/new-beach.hbs");
+});
 
-  // GET => to retrieve all the beaches from the DB
-  router.get('/beaches', (req, res, next) => {
-      async function findAllBeaches(){
-        try{
-            let allBeaches = await Beach.find();
-            //console.log('here');
-            res.render('beaches/list-beaches.hbs', {beaches: allBeaches})
-        }
-        catch(error){
-            console.log(error);
-        }
-      }
-      findAllBeaches();
-  });
-  
+// POST => to create new restaurant and save it to the DB
+router.post("/new", (req, res) => {
+  // add location object here
+  const { longitude, latitude, rate, activity, name, description } = req.body;
 
+  async function createBeach() {
+    try {
+      let newBeach = await Beach.create({
+        name,
+        description,
+        rate,
+        activity,
+        location: {
+          type: "Point",
+          coordinate: [longitude, latitude],
+        },
+      });
+      console.log(`${newBeach.name}`);
+      res.redirect("/beaches");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  createBeach();
+});
 
-  // GET => get the form pre-filled with the details of one beach
-  router.get('/beaches/:beach_id/edit', (req, res) => {
-      Beach.findById(req.params.beach_id, (error, beach) => {
+// GET => to retrieve all the beaches from the DB
+router.get("/beaches", (req, res, next) => {
+  async function findAllBeaches() {
+    try {
+      let allBeaches = await Beach.find();
+      //console.log('here');
+      res.render("beaches/list-beaches.hbs", { beaches: allBeaches });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  findAllBeaches();
+});
+
+// GET => get the form pre-filled with the details of one beach
+router.get("/beaches/:beach_id/edit", async (req, res) => {
+  const { beach_id } = req.params;
+  try {
+    const beach = await Beach.findById(beach_id);
+
+    res.render("beaches/update-beach.hbs", { beach });
+  } catch (error) {
+    console.log(error);
+  }
+
+  /* Beach.findById(req.params.beach_id, (error, beach) => {
+    if (error) {
+      next(error);
+    } else {
+    }
+  }); */
+});
+
+// POST => save updates in the database
+router.post("/beaches/:beach_id/edit", async (req, res, next) => {
+  const { beach_id } = req.params;
+  const { name, description } = req.body;
+
+  try {
+    await Beach.findByIdAndUpdate(beach_id, { name, description });
+    res.redirect(`/beaches`);
+  } catch (error) {
+    console.log(error);
+  }
+
+});
+
+// DELETE => remove the restaurant from the DB
+router.get("/beaches/:beach_id/delete", async (req, res, next) => {
+  const { beach_id } = req.params;
+  try {
+    await Beach.findByIdAndRemove(beach_id);
+    res.redirect("/beaches");
+  } catch (error) {
+    console.log(error);
+  }
+
+  /* Beach.remove({ _id: req.params.beach_id }, function(error, beach) {
           if (error) {
               next(error);
           } else {
-              res.render('beaches/update-beach.hbs', { beach });
           }
-      });
-  });
-  
+      }); */
+});
 
-  // POST => save updates in the database
-  router.post('/beaches/:beach_id', (req, res, next) => {
-      Beach.findById(req.params.beach_id, (error, beach) => {
-          if (error) { 
-        next(error); 
-      } else {
-              beach.name        = req.body.name;
-              beach.description = req.body.description;
-              beach.save(error => {
-                  if (error) { 
-                      next(error); 
-                  } else { 
-                      res.redirect(`/beaches/${req.params.beach_id}`); 
-                  }
-              });
-          }
-      });
-  });
-  
- 
-  // DELETE => remove the restaurant from the DB
-  router.get('/beaches/:beach_id/delete', (req, res, next) => {
-      Beach.remove({ _id: req.params.beach_id }, function(error, beach) {
-          if (error) {
-              next(error);
-          } else {
-              res.redirect('/beaches');
-          }
-      });
-  });
-  
-  /*
+/*
   // to see raw data in your browser, just go on: http://localhost:3000/api
   router.get('/api', (req, res, next) => {
       Restaurant.find({}, (error, allRestaurantsFromDB) => {
