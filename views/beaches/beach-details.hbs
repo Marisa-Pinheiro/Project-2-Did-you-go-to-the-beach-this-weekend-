@@ -1,4 +1,24 @@
 <h3 id="beachName" data-id="{{ beach.id}}">{{ beach.name}}</h3>
 <p>{{ beach.description}}</p>
+
+<br>
+<!-- Review Section -->
+<h4>Leave a Review!</h4>
+
+<!-- Form to Create a Review -->
+<form action="/review/create/{{beach._id}}" method="post">
+    <select name="author">
+        {{#each users}}
+            <option value="{{user._id}}">{{username}}</option>
+        {{/each}}
+    </select>
+    <label for="content">Content</label>
+    <textarea name="content" id="content" cols="30" rows="5"></textarea>
+    <button type="submit">Create the review</button>
+</form>
+<!-- End of the Form to Create a Review -->
+
+<br>
+
 <a href="/beaches/{{beach._id}}/edit">Edit this beach</a>
 <a href="/beaches">Go back to the list</a>

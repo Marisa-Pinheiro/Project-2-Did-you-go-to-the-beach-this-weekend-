@@ -2,8 +2,12 @@
 const express = require("express");
 const router = express.Router();
 
-//const axios = require("axios");
+// Require Beach Model
 const Beach = require("../models/Beach.model");
+// Require User Model 
+const User = require('../models/User.model.js');
+// Require Review Model 
+const Review = require('../models/Review.model.js');
 
 // CRUD
 // GET => render the form to create a new beach
@@ -118,8 +122,7 @@ router.get("/beaches/:beach_id/delete", async (req, res, next) => {
       });
   });*/
 
-//GET => get the details of one restaurant
-
+//GET => get the details of one beach
 router.get("/beaches/:beach_id", (req, res) => {
   const { beach_id } = req.params;
   async function findABeach() {
@@ -133,4 +136,82 @@ router.get("/beaches/:beach_id", (req, res) => {
   findABeach();
 });
 
+
+
+// GET route to retrieve and display details of a specific Beach
+router.get('/beaches/:beach_Id', (req,res)=>{
+    const {beach_Id} = req.params; 
+    async function findBeachFromDb(){
+     try{
+         // Find all the users
+         const users = await User.find();
+         // Finding the Beach via Id
+         let foundBeach = await Book.findById(beach_Id);
+         await foundBeach.populate('reviews author')
+         await foundBeach.populate({
+             path:'reviews', 
+             populate: {
+                 path:'author', 
+                 model: 'User'
+             }
+         });
+         res.render('beaches/beach-details.hbs', {beach: foundBeach, users});
+     }
+     catch(error){
+         console.log(error);
+     }
+    }
+ 
+    findBeachFromDb();
+ })
+ 
+ router.post('/review/create/:beach_id', (req,res)=>{
+     const {beach_id} = req.params; 
+     const {content, author} = req.body;
+ 
+     async function createReviewinDb(){
+         try{
+             // Create the Review
+             const newReview = await Review.create({content, author});
+ 
+             // Add the Review to the Book
+             const beachUpdate = await Beach.findByIdAndUpdate(id, {$push: {reviews: newReview._id}} );
+ 
+             // Add the Review to the User
+             const userUpdate = await User.findByIdAndUpdate(author, {$push: {reviews: newReview._id}} );
+ 
+             res.redirect(`/beaches/${beach_id}`);
+         }
+         catch(error){
+             console.log(error);
+         };
+     }
+ 
+     createReviewinDb();
+ 
+ }); 
+ 
+ router.post('/review/delete/:id', (req, res)=>{
+     const {id} = req.params; 
+ 
+     async function deleteReviewInDb(){
+         try{
+             const removedReview = await Review.findByIdAndRemove(id);
+ 
+             await User.findByIdAndUpdate(removedReview.author, {
+                 $pull: {reviews: removedReview._id}
+             });
+ 
+             res.redirect('/beaches');
+         }
+         catch(error){
+             console.log(error)
+         }
+     }
+ 
+     deleteReviewInDb();
+ })
+ 
+
+ 
 module.exports = router;
