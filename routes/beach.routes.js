@@ -3,16 +3,11 @@ const express = require("express");
 const router = express.Router();
 
 // Require Beach Model
-// Require Beach Model
 const Beach = require("../models/Beach.model");
-// Require User Model 
-const User = require('../models/User.model.js');
-// Require Review Model 
-const Review = require('../models/Review.model.js');
-// Require User Model 
-const User = require('../models/User.model.js');
-// Require Review Model 
-const Review = require('../models/Review.model.js');
+// Require User Model
+const User = require("../models/User.model.js");
+// Require Review Model
+const Review = require("../models/Review.model.js");
 
 // CRUD
 // GET => render the form to create a new beach
@@ -85,7 +80,7 @@ router.post("/beaches/:beach_id/edit", async (req, res, next) => {
   }
 });
 
-// DELETE => remove the restaurant from the DB
+// DELETE => remove the beach from the DB
 router.get("/beaches/:beach_id/delete", async (req, res, next) => {
   const { beach_id } = req.params;
   try {
@@ -105,7 +100,7 @@ router.get("/beaches/:beach_id", (req, res) => {
       const users = await User.find();
       // Finding the Beach via Id
       let foundBeach = await Beach.findById(beach_id);
-      //await foundBeach.populate('reviews author')
+      await foundBeach.populate('reviews author')
       await foundBeach.populate({
         path: "reviews",
         populate: {
@@ -122,8 +117,8 @@ router.get("/beaches/:beach_id", (req, res) => {
   findBeachFromDb();
 });
 
-router.post("/review/create/:review_id", (req, res) => {
-  const { review_id } = req.params;
+router.post("/review/create/:beach_id", (req, res) => {
+  const { beach_id } = req.params;
   const { content, author } = req.body;
 
   async function createReviewinDb() {
@@ -132,7 +127,7 @@ router.post("/review/create/:review_id", (req, res) => {
       const newReview = await Review.create({ content, author });
 
       // Add the Review to the Book
-      const beachUpdate = await Beach.findByIdAndUpdate(review_id, {
+      const beachUpdate = await Beach.findByIdAndUpdate(beach_id, {
         $push: { reviews: newReview._id },
       });
 
@@ -141,7 +136,7 @@ router.post("/review/create/:review_id", (req, res) => {
         $push: { reviews: newReview._id },
       });
 
-      res.redirect("/beaches");
+      res.redirect(`/beaches/${beach_id}`);
     } catch (error) {
       console.log(error);
     }
@@ -150,18 +145,18 @@ router.post("/review/create/:review_id", (req, res) => {
 });
 
 // DELETE review
-router.post("/review/delete/:review_id", (req, res) => {
-  const { review_id } = req.params;
+router.post("/review/delete/:beach_id", (req, res) => {
+  const { beach_id } = req.params;
 
   async function deleteReviewInDb() {
     try {
-      const removedReview = await Review.findByIdAndRemove(review_id);
+      const removedReview = await Review.findByIdAndRemove(beach_id);
 
       await User.findByIdAndUpdate(removedReview.author, {
         $pull: { reviews: removedReview._id },
       });
 
-      res.redirect("/beaches");
+      res.redirect(`/beaches/${beach_id}`);
     } catch (error) {
       console.log(error);
     }
@@ -170,82 +165,4 @@ router.post("/review/delete/:review_id", (req, res) => {
   deleteReviewInDb();
 });
 
-
-// GET route to retrieve and display details of a specific Beach
-router.get('/beaches/:beach_Id', (req,res)=>{
-    const {beach_Id} = req.params; 
-    async function findBeachFromDb(){
-     try{
-         // Find all the users
-         const users = await User.find();
-         // Finding the Beach via Id
-         let foundBeach = await Book.findById(beach_Id);
-         await foundBeach.populate('reviews author')
-         await foundBeach.populate({
-             path:'reviews', 
-             populate: {
-                 path:'author', 
-                 model: 'User'
-             }
-         });
-         res.render('beaches/beach-details.hbs', {beach: foundBeach, users});
-     }
-     catch(error){
-         console.log(error);
-     }
-    }
- 
-    findBeachFromDb();
- })
- 
- router.post('/review/create/:beach_id', (req,res)=>{
-     const {beach_id} = req.params; 
-     const {content, author} = req.body;
- 
-     async function createReviewinDb(){
-         try{
-             // Create the Review
-             const newReview = await Review.create({content, author});
- 
-             // Add the Review to the Book
-             const beachUpdate = await Beach.findByIdAndUpdate(id, {$push: {reviews: newReview._id}} );
- 
-             // Add the Review to the User
-             const userUpdate = await User.findByIdAndUpdate(author, {$push: {reviews: newReview._id}} );
- 
-             res.redirect(`/beaches/${beach_id}`);
-         }
-         catch(error){
-             console.log(error);
-         };
-     }
- 
-     createReviewinDb();
- 
- }); 
- 
- router.post('/review/delete/:id', (req, res)=>{
-     const {id} = req.params; 
- 
-     async function deleteReviewInDb(){
-         try{
-             const removedReview = await Review.findByIdAndRemove(id);
- 
-             await User.findByIdAndUpdate(removedReview.author, {
-                 $pull: {reviews: removedReview._id}
-             });
- 
-             res.redirect('/beaches');
-         }
-         catch(error){
-             console.log(error)
-         }
-     }
- 
-     deleteReviewInDb();
- })
- 
-
- 
 module.exports = router;
-
