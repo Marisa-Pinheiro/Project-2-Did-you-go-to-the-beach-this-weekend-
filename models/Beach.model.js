@@ -4,9 +4,11 @@ const beachSchema = new Schema(
 {
     name: String, 
     description: String, 
-    imageUrl: String,
+    //imageUrl: String,
     rating: Number,
-    directionsUrl: String,
+    activity: String,
+    //directionsUrl: String,
+    location: {type: {type: String}, coordinate:[Number]},
     reviews: [{
     type: Schema.Types.ObjectId, 
     ref: 'Review'
@@ -16,7 +18,7 @@ const beachSchema = new Schema(
     timestamps: true
 })
 
-const Beach = model("Beach", userSchema);
+const Beach = model("Beach", beachSchema);
 
 module.exports = Beach;
 

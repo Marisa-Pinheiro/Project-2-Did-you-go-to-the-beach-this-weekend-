@@ -1,0 +1,20 @@
+<!-- list-beaches.hbs -->
+<h1>{{title}}</h1>
+<div class="info">
+    <h3>List of all beaches</h3>
+    <a href="/beaches/new">Create new restaurant</a>
+    <ul>
+        {{#each beaches}}
+        <li>
+            <a href="/beaches/{{this._id}}">{{name}}</a>
+            |
+            <a href="/beaches/{{this._id}}/delete">Delete</a>
+            |
+            <a href="/beaches/{{this._id}}/edit">Edit</a>
+        </li>
+        {{/each }}
+    </ul>
+</div>
+
+
+  
