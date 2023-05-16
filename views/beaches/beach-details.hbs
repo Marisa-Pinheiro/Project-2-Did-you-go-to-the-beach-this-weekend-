@@ -1,4 +1,38 @@
-<h3 id="beachName" data-id="{{ beach.id}}">{{ beach.name}}</h3>
-<p>{{ beach.description}}</p>
+<!-- beach-details.hbs -->
+
+<h3 id="beachName" data-id="{{beach.id}}">{{beach.name}}</h3>
+<p>{{beach.description}}</p>
+
+<br />
+<!-- Review Section -->
+<h4>Leave a Review!</h4>
+
+<!-- Form to Create a Review -->
+<form action="/review/create/{{beach._id}}" method="post">
+  <select name="author">
+    {{#each users}}
+      <option value="{{_id}}">{{username}}</option>
+    {{/each}}
+  </select>
+  <label for="content">Content</label>
+  <textarea name="content" id="content" cols="30" rows="5"></textarea>
+  <button type="submit">Create the review</button>
+</form>
+<!-- End of the Form to Create a Review -->
+
+<br />
+
+<!-- Display all the Reviews of the Book that we're seeing -->
+{{#each beach.reviews}}
+  <div>
+    <!-- Actually displaying the review -->
+    <p><span>By {{author.username}}</span>: {{content}}</p>
+    <!-- Deleting the Review -->
+    <form action="/review/delete/{{_id}}" method="post">
+      <button type="submit">Delete</button>
+    </form>
+  </div>
+{{/each}}
+
 <a href="/beaches/{{beach._id}}/edit">Edit this beach</a>
 <a href="/beaches">Go back to the list</a>

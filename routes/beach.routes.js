@@ -2,8 +2,12 @@
 const express = require("express");
 const router = express.Router();
 
-//const axios = require("axios");
+// Require Beach Model
 const Beach = require("../models/Beach.model");
+// Require User Model 
+const User = require('../models/User.model.js');
+// Require Review Model 
+const Review = require('../models/Review.model.js');
 
 // CRUD
 // GET => render the form to create a new beach
@@ -85,52 +89,80 @@ router.get("/beaches/:beach_id/delete", async (req, res, next) => {
   } catch (error) {
     console.log(error);
   }
-
-  /* Beach.remove({ _id: req.params.beach_id }, function(error, beach) {
-          if (error) {
-              next(error);
-          } else {
-          }
-      }); */
 });
 
-/*
-  // to see raw data in your browser, just go on: http://localhost:3000/api
-  router.get('/api', (req, res, next) => {
-      Restaurant.find({}, (error, allRestaurantsFromDB) => {
-          if (error) { 
-              next(error); 
-          } else { 
-              res.status(200).json({ restaurants: allRestaurantsFromDB });
-          }
-      });
-  });
-  
-  // to see raw data in your browser, just go on: http://localhost:3000/api/someIdHere
-  router.get('/api/:id', (req, res, next) => {
-      let restaurantId = req.params.id;
-      Restaurant.findOne({_id: restaurantId}, (error, oneRestaurantFromDB) => {
-          if (error) { 
-              next(error) 
-          } else { 
-              res.status(200).json({ restaurant: oneRestaurantFromDB }); 
-          }
-      });
-  });*/
-
-//GET => get the details of one restaurant
-
+// GET route to retrieve and display details of a specific Beach
 router.get("/beaches/:beach_id", (req, res) => {
   const { beach_id } = req.params;
-  async function findABeach() {
+  async function findBeachFromDb() {
     try {
-      let findBeach = await Beach.findById(beach_id);
-      res.render("beaches/beach-details.hbs", { beach: findBeach });
+      // Find all the users
+      const users = await User.find();
+      // Finding the Beach via Id
+      let foundBeach = await Beach.findById(beach_id);
+      //await foundBeach.populate('reviews author')
+      await foundBeach.populate({
+        path: "reviews",
+        populate: {
+          path: "author",
+          model: "User",
+        },
+      });
+      res.render("beaches/beach-details.hbs", { beach: foundBeach, users });
     } catch (error) {
       console.log(error);
     }
   }
-  findABeach();
+
+  findBeachFromDb();
+});
+
+router.post("/review/create/:review_id", (req, res) => {
+  const { review_id } = req.params;
+  const { content, author } = req.body;
+
+  async function createReviewinDb() {
+    try {
+      // Create the Review
+      const newReview = await Review.create({ content, author });
+
+      // Add the Review to the Book
+      const beachUpdate = await Beach.findByIdAndUpdate(review_id, {
+        $push: { reviews: newReview._id },
+      });
+
+      // Add the Review to the User
+      const userUpdate = await User.findByIdAndUpdate(author, {
+        $push: { reviews: newReview._id },
+      });
+
+      res.redirect("/beaches");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  createReviewinDb();
+});
+
+// DELETE review
+router.post("/review/delete/:review_id", (req, res) => {
+  const { review_id } = req.params;
+
+  async function deleteReviewInDb() {
+    try {
+      const removedReview = await Review.findByIdAndRemove(review_id);
+
+      await User.findByIdAndUpdate(removedReview.author, {
+        $pull: { reviews: removedReview._id },
+      });
+
+      res.redirect("/beaches");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  deleteReviewInDb();
 });
 
 module.exports = router;
