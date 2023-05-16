@@ -61,13 +61,6 @@ router.get("/beaches/:beach_id/edit", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-
-  /* Beach.findById(req.params.beach_id, (error, beach) => {
-    if (error) {
-      next(error);
-    } else {
-    }
-  }); */
 });
 
 // POST => save updates in the database
@@ -81,7 +74,6 @@ router.post("/beaches/:beach_id/edit", async (req, res, next) => {
   } catch (error) {
     console.log(error);
   }
-
 });
 
 // DELETE => remove the restaurant from the DB
@@ -124,19 +116,21 @@ router.get("/beaches/:beach_id/delete", async (req, res, next) => {
               res.status(200).json({ restaurant: oneRestaurantFromDB }); 
           }
       });
-  });
-  
-  // GET => get the details of one restaurant
-  router.get('/:restaurant_id', (req, res, next) => {
-      Restaurant.findById(req.params.restaurant_id, (error, restaurant) => {
-          if (error) {
-              next(error);
-          } else {
-              res.render('restaurants/show', { restaurant: restaurant });
-          }
-      });
-  });
+  });*/
 
- */
+//GET => get the details of one restaurant
+
+router.get("/beaches/:beach_id", (req, res) => {
+  const { beach_id } = req.params;
+  async function findABeach() {
+    try {
+      let findBeach = await Beach.findById(beach_id);
+      res.render("beaches/beach-details.hbs", { beach: findBeach });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  findABeach();
+});
 
 module.exports = router;
