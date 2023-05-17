@@ -78,10 +78,53 @@ body {
 }
 
 #homepage {
-  width: auto;
+  width: 1512px;
+  height: 855px;
   background-image: url(/images/homepage-image.jpeg);
   background-size:cover;
   background-repeat: no-repeat;
   position: fixed;
   align-self: center;
 }
+
+.first-page-text {
+  width:575px ;
+  height: 163px;
+  background-color: #f7f7f775 ;
+  display: flex;
+  flex-direction: column;
+  color: #F5F5F5;
+  position: fixed;
+  top: 527px;
+  left: 39px ;
+}
+.first-page-text h1{
+  padding-left: 20px;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 28px;
+  margin-bottom: 0;
+}
+.first-page-text p {
+  padding-left: 20px;
+  margin-top: 0;
+  font-size: 18px;
+  font-weight: 200;
+}
+.homepage-sudo-buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content:space-around;
+  align-items: center;
+}
+
+.homepage-sudo-buttons a{
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 20px;
+  background-color: #337680;
+  padding: 10px 50px;
+  border-radius: 5px;
+
+}
+
