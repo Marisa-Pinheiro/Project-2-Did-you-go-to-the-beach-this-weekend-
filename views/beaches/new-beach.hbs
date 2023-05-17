@@ -1,22 +1,28 @@
 <!-- edit-beach.hbs -->
-<h3>Add new Beach</h3>
-<form method="POST" action="/new" enctype="multipart/form-data">
-    <label>Name:</label>
-    <input type="text" name="name" placeholder="name">
-    <label>Description:</label>
-    <input type="text" name="description" placeholder="description">
-    <label>Best Activity</label>
-    <input type="text" name="best activity" placeholder="activity">
-    <label>Rate</label>
-    <input type="Number" name="Rate" placeholder="Rate">
-    <lable>Address</lable>
-    <input type="text" name="latitude" placeholder="latitude">
-    <input type="text" name="longitude" placeholder="longitude">
-    <label>Image:</label>
-    <input type="file" name="beach-image"/>
-
-
-    <input type="submit" id="submit">
-</form>
-<a href="/beaches">Back to the list</a>
-<a href="/">Home</a>
+<body id="create-new-beach">
+  <div id="new-beach">
+    <div class="new-beach-text">
+      <h5>Add a new beach!</h5>
+    </div>
+    <form method="POST" action="/new" enctype="multipart/form-data">
+      <label>Name:</label><br />
+      <input type="text" name="name" placeholder="Name" />
+      <br />
+      <label>Description:</label><br />
+      <input type="text" name="description" placeholder="Description" /><br />
+      <label>Best Activity</label><br />
+      <input type="text" name="best activity" placeholder="Activity" /><br />
+      <label>Rate</label><br />
+      <input type="Number" name="Rate" min="0" max="5" placeholder="Rate" /><br />
+      <lable>Address</lable><br />
+      <input type="text" name="latitude" placeholder="Latitude" />
+      <input type="text" name="longitude" placeholder="Longitude" /><br />
+      <label>Image:</label><br />
+      <br />
+      <input type="file" name="beach-image" /><br />
+      <div class="new-beach-submit">
+        <button type="submit" id="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+</body>
