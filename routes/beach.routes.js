@@ -9,6 +9,9 @@ const User = require("../models/User.model.js");
 // Require Review Model
 const Review = require("../models/Review.model.js");
 
+// Require fileUploader
+const fileUploader = require('../config/cloudinary.config');
+
 // CRUD
 // GET => render the form to create a new beach
 router.get("/new", (req, res) => {
