@@ -1,18 +1,6 @@
-
 body {
-
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   margin: 0px;
-}
-
-a {
-  color: #FFFFFF;
-  text-decoration: none;
-  font-size: 20px;
-}
-
-h1 {
-  color: 15px;
 }
 
 #nav-bar {
@@ -33,7 +21,6 @@ h1 {
   position: fixed;
   top: 2px;
   left: 10px;
-
 }
 .dropbtn {
   background-color: #337680;
@@ -48,7 +35,7 @@ h1 {
   position: absolute;
   background-color: #f1f1f1;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
@@ -60,13 +47,19 @@ h1 {
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd;}
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
 
 /* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {background-color: #337680;}
+.dropdown:hover .dropbtn {
+  background-color: #337680;
+}
 
 #to-right {
   display: flex;
@@ -76,10 +69,19 @@ h1 {
   position: fixed;
   right: 10px;
   align-items: center;
-
-
 }
-.nav-link{
+.nav-link {
   margin: 20px;
-  
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+#homepage {
+  width: auto;
+  background-image: url(/images/homepage-image.jpeg);
+  background-size:cover;
+  background-repeat: no-repeat;
+  position: fixed;
+  align-self: center;
 }
