@@ -280,3 +280,29 @@ body {
   justify-content: center;
   background-color: white;
 }
+
+#list-beaches{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top:40px;
+  flex-wrap: nowrap;
+}
+#list-beaches h3{
+  font-size: 56;
+  font-weight: 300;
+}
+#index-cards{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#list-beaches-cards{
+  width: 270px;
+  height: 355;
+  border: 2px solid rgb(199, 198, 198);
+  margin: 10px 20px;
+}
