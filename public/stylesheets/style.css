@@ -1,5 +1,5 @@
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   margin: 0px;
 }
 
@@ -34,9 +34,9 @@ body {
   display: none;
   position: absolute;
   background-color: #f1f1f1;
-  min-width: 160px;
+  min-width: 180px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 4;
+  z-index: 100;
 }
 
 .dropdown-content a {
@@ -81,7 +81,7 @@ body {
   width: 1512px;
   height: 855px;
   background-image: url(/images/homepage-image.jpeg);
-  background-size:cover;
+  background-size: cover;
   background-repeat: no-repeat;
   position: fixed;
   align-self: center;
@@ -89,17 +89,17 @@ body {
 }
 
 .first-page-text {
-  width:575px ;
+  width: 575px;
   height: 163px;
-  background-color: #f7f7f775 ;
+  background-color: #f7f7f775;
   display: flex;
   flex-direction: column;
-  color: #F5F5F5;
+  color: #f5f5f5;
   position: fixed;
   top: 527px;
-  left: 39px ;
+  left: 39px;
 }
-.first-page-text h1{
+.first-page-text h1 {
   padding-left: 20px;
   font-weight: 400;
   font-style: italic;
@@ -112,20 +112,82 @@ body {
   font-size: 18px;
   font-weight: 200;
 }
-.homepage-sudo-buttons{
+.homepage-sudo-buttons {
   display: flex;
   flex-direction: row;
-  justify-content:space-around;
+  justify-content: space-around;
   align-items: center;
 }
 
-.homepage-sudo-buttons a{
-  color: #FFFFFF;
+.homepage-sudo-buttons a {
+  color: #ffffff;
   text-decoration: none;
   font-size: 20px;
   background-color: #337680;
   padding: 10px 50px;
   border-radius: 5px;
+}
+#sign-up-page {
+  width: 1512px;
+  height: 700px;
+  background-image: url(/images/sign-up-background.jpeg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: fixed;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+}
+#sign-up-page h1{
+  font-size: 48;
+  color: #ffffff;
+  position: fixed;
+  top: 117 ;
+  margin-bottom: 30px;
+  font-stretch:semi-condensed;
 
+  
 }
 
+#form-signin {
+  width: 414px;
+  height: 346px;
+  background-color: #f7f7f775;
+  display: flex;
+  flex-direction: column;
+  color: #f5f5f5;
+  align-self: center;
+  justify-self: center;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 10;
+}
+
+#form-signin label {
+  font-size: 20px;
+  color: #000000;
+  padding-bottom: 20px;
+}
+
+#form-signin input {
+  width: 318px;
+  height: 47px;
+  border: #ffffff;
+  margin: 10px 0px;
+  
+}
+#form-signin button {
+  color: #ffffff;
+  width: 118px;
+  height: 37px;
+  border-style: none;
+  background-color: #337680;
+  font-size: 15px;
+  position: fixed;
+  top: 535;
+  left: 699;
+  border-radius: 5px;
+}

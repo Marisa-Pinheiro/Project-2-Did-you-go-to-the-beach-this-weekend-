@@ -19,9 +19,9 @@ router.get("/new", (req, res) => {
 });
 
 // POST => to create new restaurant and save it to the DB
-router.post("/new", (req, res) => {
+router.post("/new", fileUploader.single('beach-image'), (req, res) => {
   // add location object here
-  const { longitude, latitude, rate, activity, name, description } = req.body;
+  const { longitude, latitude, rate, activity, name, description, imageUrl } = req.body;
 
   async function createBeach() {
     try {
@@ -34,6 +34,7 @@ router.post("/new", (req, res) => {
           type: "Point",
           coordinate: [longitude, latitude],
         },
+        imageUrl: req.file.path,
       });
       console.log(`${newBeach.name}`);
       res.redirect("/beaches");
@@ -102,9 +103,7 @@ router.get("/beaches/:beach_id", (req, res) => {
       // Find all the users
       const users = await User.find();
       // Finding the Beach via Id
-      let foundBeach = await Beach.findById(beach_id);
-      await foundBeach.populate('reviews author')
-      await foundBeach.populate({
+      let foundBeach = await Beach.findById(beach_id).populate({
         path: "reviews",
         populate: {
           path: "author",
@@ -130,14 +129,22 @@ router.post("/review/create/:beach_id", (req, res) => {
       const newReview = await Review.create({ content, author });
 
       // Add the Review to the Book
-      const beachUpdate = await Beach.findByIdAndUpdate(beach_id, {
-        $push: { reviews: newReview._id },
+      const beachUpdate = await Beach.findByIdAndUpdate(
+        beach_id,
+        { $push: { reviews: newReview._id } },
+        { new: true } // Add { new: true } to return the updated document
+      ).populate({
+        path: "reviews",
+        populate: {
+          path: "author",
+          model: "User",
+        },
       });
-
+       
       // Add the Review to the User
       const userUpdate = await User.findByIdAndUpdate(author, {
         $push: { reviews: newReview._id },
-      });
+      }); 
 
       res.redirect(`/beaches/${beach_id}`);
     } catch (error) {
@@ -148,18 +155,22 @@ router.post("/review/create/:beach_id", (req, res) => {
 });
 
 // DELETE review
-router.post("/review/delete/:beach_id", (req, res) => {
-  const { beach_id } = req.params;
+router.post("/review/delete/:review_id/:beachId", (req, res) => {
+  const { review_id, beachId } = req.params;
 
   async function deleteReviewInDb() {
     try {
-      const removedReview = await Review.findByIdAndRemove(beach_id);
+      const removedReview = await Review.findByIdAndRemove(review_id);
 
       await User.findByIdAndUpdate(removedReview.author, {
-        $pull: { reviews: removedReview._id },
+        $pull: { reviews: review_id},
       });
 
-      res.redirect(`/beaches/${beach_id}`);
+      await Beach.findByIdAndUpdate(beachId, {
+        $pull: { reviews: review_id},
+      });
+
+      res.redirect(`/beaches/${beachId}`);
     } catch (error) {
       console.log(error);
     }
@@ -167,5 +178,10 @@ router.post("/review/delete/:beach_id", (req, res) => {
 
   deleteReviewInDb();
 });
+
+/* // GET route to display a form
+router.get('/beaches/${beach_id}/addimg', (req,res)=>{
+  res.render('beaches/new-img-beach.hbs');
+}); */
 
 module.exports = router;

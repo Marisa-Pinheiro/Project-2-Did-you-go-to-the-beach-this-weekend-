@@ -4,7 +4,7 @@ const beachSchema = new Schema(
 {
     name: String, 
     description: String, 
-    //imageUrl: String,
+    imageUrl: String,
     rating: Number,
     activity: String,
     //directionsUrl: String,

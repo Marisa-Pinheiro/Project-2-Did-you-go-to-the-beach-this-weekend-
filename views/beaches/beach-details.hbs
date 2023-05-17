@@ -28,7 +28,7 @@
     <!-- Actually displaying the review -->
     <p><span>By {{author.username}}</span>: {{content}}</p>
     <!-- Deleting the Review -->
-    <form action="/review/delete/{{_id}}" method="post">
+    <form action="/review/delete/{{_id}}/{{../beach._id}}" method="post">
       <button type="submit">Delete</button>
     </form>
   </div>
