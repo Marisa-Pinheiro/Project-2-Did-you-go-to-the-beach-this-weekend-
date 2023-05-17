@@ -22,6 +22,7 @@
 
 <br />
 
+
 <!-- Display all the Reviews of the Book that we're seeing -->
 {{#each beach.reviews}}
   <div>
@@ -34,5 +35,14 @@
   </div>
 {{/each}}
 
+<!--- Beach Gallery -->
+<img src="{{beach.imageUl}}" alt="{{beach.name}}" width="300" height="200">
+
+<br>
+
+<!--- add Image to Beach -->
+<a href="/beaches/{{beach._id}}/addimage">Add your image this beach</a>
+<br>
 <a href="/beaches/{{beach._id}}/edit">Edit this beach</a>
+<br>
 <a href="/beaches">Go back to the list</a>

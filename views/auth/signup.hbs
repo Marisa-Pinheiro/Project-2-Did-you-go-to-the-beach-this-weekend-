@@ -1,27 +1,27 @@
-<div id="sign-up-page">
-<h1>LET'S GET SOME SUN TOGETHER</h1>
+<body id="sign-up-page">
 
-<div id="form-signin">
-  <form action="/signup" method="POST">
+  <h1>LET'S GET SOME SUN TOGETHER</h1>
 
-    <label>Username<br>
-      <input type="text" name="username" placeholder="Username" /></label>
-    <br>
+  <div id="form-signin">
+    <form action="/signup" method="POST">
 
-    <label>Email<br>
-      <input type="email" name="email" placeholder="Your email" /></label>
-    <br>
+      <label>Username<br />
+        <input type="text" name="username" placeholder="Username" /></label>
+      <br />
 
-    <label>Password<br>
-      <input type="password" name="password" placeholder="********" /></label>
-     <br>
+      <label>Email<br />
+        <input type="email" name="email" placeholder="Your email" /></label>
+      <br />
 
-    <button type="submit">Sign in</button>
+      <label>Password<br />
+        <input type="password" name="password" placeholder="********" /></label>
+      <br />
 
+      <button type="submit">Sign in</button>
 
-    {{#if errorMessage}}
-      <p class="error">{{errorMessage}}</p>
-    {{/if}}
-  </form>
-</div>
-</div>
+      {{#if errorMessage}}
+        <p class="error">{{errorMessage}}</p>
+      {{/if}}
+    </form>
+  </div>
+  </body>

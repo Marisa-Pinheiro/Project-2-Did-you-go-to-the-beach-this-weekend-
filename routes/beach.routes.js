@@ -21,11 +21,11 @@ router.get("/new", (req, res) => {
 // POST => to create new restaurant and save it to the DB
 router.post("/new", fileUploader.single('beach-image'), (req, res) => {
   // add location object here
-  const { longitude, latitude, rate, activity, name, description, imageUrl } = req.body;
+  const { longitude, latitude, rate, activity, name, description} = req.body;
 
   async function createBeach() {
     try {
-      let newBeach = await Beach.create({
+      await Beach.create({
         name,
         description,
         rate,
@@ -36,7 +36,6 @@ router.post("/new", fileUploader.single('beach-image'), (req, res) => {
         },
         imageUrl: req.file.path,
       });
-      console.log(`${newBeach.name}`);
       res.redirect("/beaches");
     } catch (error) {
       console.log(error);
@@ -128,7 +127,7 @@ router.post("/review/create/:beach_id", (req, res) => {
       // Create the Review
       const newReview = await Review.create({ content, author });
 
-      // Add the Review to the Book
+      // Add the Review to the Beach
       const beachUpdate = await Beach.findByIdAndUpdate(
         beach_id,
         { $push: { reviews: newReview._id } },
@@ -179,9 +178,35 @@ router.post("/review/delete/:review_id/:beachId", (req, res) => {
   deleteReviewInDb();
 });
 
-/* // GET route to display a form
-router.get('/beaches/${beach_id}/addimg', (req,res)=>{
+
+// GET route to display a form to Add Image to Beach
+router.get('/beaches/:beach_id/addimage', (req,res)=>{
   res.render('beaches/new-img-beach.hbs');
-}); */
+}); 
+
+// POST Route to save the new Image to Beach data
+router.post('/beaches/:beach_id/addimage', fileUploader.single('new-beach-image'), (req,res) =>{
+  const {beach_id} = req.params; 
+
+  const {existingImage} = req.body;
+
+  let imageUrl; 
+  if(req.file){
+      imageUrl = req.file.path;
+  } else {
+      imageUrl = existingImage;
+  }
+
+  async function findBeachAndUpdate(){
+      try{
+          await Beach.findByIdAndUpdate(beach_id, {imageUrl}, {new: true});
+          res.redirect(`/beaches/${beach_id}`);
+      }
+      catch(error){
+          console.log(error);
+      }
+  }
+  findBeachAndUpdate();
+})
 
 module.exports = router;

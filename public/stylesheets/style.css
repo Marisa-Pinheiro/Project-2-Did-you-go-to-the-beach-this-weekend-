@@ -7,7 +7,7 @@ body {
   width: 1512px;
   height: 57px;
   background-color: #337680;
-  position: sticky;
+  position:fixed;
   top: 0;
   display: flex;
   flex-direction: row;
@@ -36,7 +36,7 @@ body {
   background-color: #f1f1f1;
   min-width: 180px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 100;
+  z-index: 9999;
 }
 
 .dropdown-content a {
@@ -139,17 +139,16 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  z-index: -1;
   
 }
-#sign-up-page h1{
+#sign-up-page h1, #login-page h1 {
   font-size: 48;
   color: #ffffff;
   position: fixed;
   top: 117 ;
   margin-bottom: 30px;
   font-stretch:semi-condensed;
-
-  
 }
 
 #form-signin {
@@ -159,35 +158,67 @@ body {
   display: flex;
   flex-direction: column;
   color: #f5f5f5;
+  position: fixed;
+  top: 216;
+  left: 549;
+  display: flex;
   align-self: center;
   justify-self: center;
   justify-content: space-around;
   align-items: center;
-  z-index: 10;
 }
 
-#form-signin label {
+#form-signin label, #login-form label {
   font-size: 20px;
   color: #000000;
   padding-bottom: 20px;
 }
 
-#form-signin input {
+#form-signin input, #login-form input{
   width: 318px;
   height: 47px;
   border: #ffffff;
   margin: 10px 0px;
   
 }
-#form-signin button {
+#form-signin button,  #login-form button  {
   color: #ffffff;
   width: 118px;
   height: 37px;
   border-style: none;
   background-color: #337680;
   font-size: 15px;
-  position: fixed;
-  top: 535;
-  left: 699;
   border-radius: 5px;
+  position: fixed;
+  left: 699;
+}
+#login-page{
+  width: 1512px;
+  height: 700px;
+  background-image: url(/images/login-page-image.jpeg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: fixed;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: -1;
+}
+#login-form {
+  width: 414px;
+  height: 346px;
+  background-color: #f7f7f775;
+  display: flex;
+  flex-direction: column;
+  color: #f5f5f5;
+  position: fixed;
+  top: 216;
+  left: 549;
+  display: flex;
+  align-self: center;
+  justify-self: center;
+  justify-content: space-around;
+  align-items: center;
 }

@@ -1,0 +1,12 @@
+<h3 id="beachName" data-id="{{beach.id}}">{{beach.name}}</h3>
+<p>{{beach.description}}</p>
+<img src="{{beach.imageUrl}}" alt="{{beach.name}}">
+
+<div>
+    <form method="POST" action="/beaches/:beach_id/addimage" enctype="multipart/form-data">
+    <label>Add your image:</label>
+        <input type="file" name="new-beach-image"/>
+        <input type="text" name="existingImage" hidden value="{{imageUrl}}">
+        <input type="submit" id="submit">
+    </form>
+</div>
