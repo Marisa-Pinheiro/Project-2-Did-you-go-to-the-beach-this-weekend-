@@ -4,36 +4,44 @@
       <h2>Welcome, {{userInSession.username}}</h2>
     </div>
     <div class="user-details">
+      
+<form id="delete-form" action="/userprofile/delete/{{userInSession._id}}" method="POST">
+  <button>Delete</button>
+</form>
+
+
       <div class="user-picture">
         <h4>{{userInSession.username}}</h4>
 
       </div>
       <div class="user-info">
-        <h5>Your Favourite beaches:</h5>
-        <ul>
-          {{#each user.favorites}}
-            <li>
-              <a href="/beaches/{{beach._id}}">{{name}}</a>
-            </li>
-          {{/each}}
-        </ul>
+      <h5>Your Favorite beaches:</h5>
+<ul>
+  {{#each favorites}}
+    <li>
+      <a href="/beaches/{{this._id}}">{{this.name}}</a>
+    </li>
+  {{/each}}
+</ul>
+
+      
       </div>
     </div>
     <div class="user-actions">
-      <form id="logout-form" action="/logout" method="POST">
+      <form id="logout-form" action="/logout" method="GET">
         <button>Logout</button>
-      </form>
-      {{#each user}}
-      <a href="/userprofile/{{this._id}}/delete">Delete</a>
-      {{/each}}
-    </div>
+      </form> 
+
   {{else}}
+    </div> 
+   
     <br />
     <!-- stands for a new line break -->
-    <p>Still no logged in user</p>
-  {{/if}}
+    <p>Still no logged in user</p> 
+   
+   
+    {{/if}}
 
-       <!--{{#each user}}
-      <a href="/userprofile/{{this._id}}/delete">Delete</a>
-      {{/each}}-->
+     
+    
 </body>

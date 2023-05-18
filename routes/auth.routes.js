@@ -144,12 +144,13 @@ router.post("/login", isLoggedOut, (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.get('/userprofile', (req, res)=>{
+router.get('/userprofile/', (req, res)=>{
   res.render('user/userprofile.hbs', {userInSession: req.session.currentUser});
 });
 
+
 // POST /auth/logout
-router.post("/logout", isLoggedIn, (req, res) => {
+router.get("/logout", isLoggedIn, (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       res.status(500).render("auth/logout", { errorMessage: err.message });
@@ -159,16 +160,25 @@ router.post("/logout", isLoggedIn, (req, res) => {
   });
 });
 
-/* // DELETE => remove the user from the DB
-router.get("/userprofile/:user_id/delete", async (req, res) => {
-  const { user_id } = req.params;
+router.post('/userprofile/delete/:id', isLoggedIn, async (req, res, next) => {
+
+  const { id } = req.params;
+
   try {
-    await User.findByIdAndRemove(user_id);
-    res.redirect("/");
+      await User.findByIdAndRemove(id);
+      req.session.destroy((err) => {
+        if (err) {
+          res.status(500).render("auth/logout", { errorMessage: err.message });
+          return;
+        }
+        res.redirect("/");
+      });
+
   } catch (error) {
-    console.log(error);
+      console.log(error);
+      next(error);
   }
-}); */
+});
 
 
 

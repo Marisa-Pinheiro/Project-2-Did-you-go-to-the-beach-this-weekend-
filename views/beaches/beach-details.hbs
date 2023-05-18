@@ -13,7 +13,7 @@
  <!-- Fav Beach -->
 
  {{#if isFav}}
-        <form action="/beaches/{{beach._id}}/removeFavs" method="post">
+        <form action="/beaches/{{beach._id}}/removeFavs" method="get">
           <button type="submit">Remove from my favourite List</button>
         </form>
       {{else}}

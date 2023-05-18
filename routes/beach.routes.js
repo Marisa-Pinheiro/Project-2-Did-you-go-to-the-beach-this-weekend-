@@ -10,7 +10,7 @@ const User = require("../models/User.model.js");
 const Review = require("../models/Review.model.js");
 
 // Require fileUploader
-const fileUploader = require('../config/cloudinary.config');
+const fileUploader = require("../config/cloudinary.config");
 
 // CRUD
 // GET => render the form to create a new beach
@@ -19,7 +19,7 @@ router.get("/new", (req, res) => {
 });
 
 // POST => to create new Beach and save it to the DB
-router.post("/new", fileUploader.single('beach-image'), (req, res) => {
+router.post("/new", fileUploader.single("beach-image"), (req, res) => {
   const { name, description, rate, activity, longitude, latitude } = req.body;
 
   async function createBeach() {
@@ -71,25 +71,29 @@ router.get("/beaches/:beach_id/edit", async (req, res) => {
 });
 
 // POST => save updates in the database
-router.post("/beaches/:beach_id/edit", fileUploader.single('beach-image'), async (req, res, next) => {
-  const { beach_id } = req.params;
-  const { name, description, existingImage} = req.body;
+router.post(
+  "/beaches/:beach_id/edit",
+  fileUploader.single("beach-image"),
+  async (req, res, next) => {
+    const { beach_id } = req.params;
+    const { name, description, existingImage } = req.body;
 
-  let imageUrl;
+    let imageUrl;
 
-  if(req.file){
-    imageUrl = req.file.path;
-} else {
-    imageUrl = existingImage;
-}
+    if (req.file) {
+      imageUrl = req.file.path;
+    } else {
+      imageUrl = existingImage;
+    }
 
-  try {
-    await Beach.findByIdAndUpdate(beach_id, { name, description, imageUrl });
-    res.redirect(`/beaches`);
-  } catch (error) {
-    console.log(error);
+    try {
+      await Beach.findByIdAndUpdate(beach_id, { name, description, imageUrl });
+      res.redirect(`/beaches`);
+    } catch (error) {
+      console.log(error);
+    }
   }
-});
+);
 
 // DELETE => remove the beach from the DB
 router.get("/beaches/:beach_id/delete", async (req, res) => {
@@ -134,7 +138,10 @@ router.post("/review/create/:beach_id", (req, res) => {
   async function createReviewinDb() {
     try {
       // Create the Review
-      const newReview = await Review.create({ content, author: req.session.currentUser});
+      const newReview = await Review.create({
+        content,
+        author: req.session.currentUser,
+      });
 
       // Add the Review to the Beach
       const beachUpdate = await Beach.findByIdAndUpdate(
@@ -142,11 +149,11 @@ router.post("/review/create/:beach_id", (req, res) => {
         { $push: { reviews: newReview._id } },
         { new: true } // Add { new: true } to return the updated document
       );
-       
+
       // Add the Review to the User
       const userUpdate = await User.findByIdAndUpdate(req.session.currentUser, {
         $push: { reviews: newReview._id },
-      }); 
+      });
 
       res.redirect(`/beaches/${beach_id}`);
     } catch (error) {
@@ -165,11 +172,11 @@ router.post("/review/delete/:review_id/:beachId", (req, res) => {
       const removedReview = await Review.findByIdAndRemove(review_id);
 
       await User.findByIdAndUpdate(removedReview.author, {
-        $pull: { reviews: review_id},
+        $pull: { reviews: review_id },
       });
 
       await Beach.findByIdAndUpdate(beachId, {
-        $pull: { reviews: review_id},
+        $pull: { reviews: review_id },
       });
 
       res.redirect(`/beaches/${beachId}`);
@@ -181,55 +188,90 @@ router.post("/review/delete/:review_id/:beachId", (req, res) => {
   deleteReviewInDb();
 });
 
-
 // GET route to display a form to Add Image to Beach
-router.get('/beaches/:beachId/addimage', async (req,res)=>{
+router.get("/beaches/:beachId/addimage", async (req, res) => {
   const { beachId } = req.params;
   try {
     const beach = await Beach.findById(beachId);
-  res.render('beaches/new-img-beach.hbs', {beach});
+    res.render("beaches/new-img-beach.hbs", { beach });
   } catch (error) {
-  console.log(error);
-}
-}); 
-
-
-// POST Route to save the new Image to Beach data
-router.post('/beaches/:beachId/addimage', fileUploader.single('new-beach-image'), async (req,res) =>{
-  const {beachId} = req.params;
-
-  let image; 
-  image = req.file.path;
-
-
-      try{
-          await Beach.findByIdAndUpdate(beachId, {$push: {gallery: image}}, {new: true});
-          res.redirect(`/beaches/${beachId}`);
-      }
-      catch(error){
-          console.log(error);
-      }
+    console.log(error);
+  }
 });
 
+// POST Route to save the new Image to Beach data
+router.post(
+  "/beaches/:beachId/addimage",
+  fileUploader.single("new-beach-image"),
+  async (req, res) => {
+    const { beachId } = req.params;
 
+    let image;
+    image = req.file.path;
 
+    try {
+      await Beach.findByIdAndUpdate(
+        beachId,
+        { $push: { gallery: image } },
+        { new: true }
+      );
+      res.redirect(`/beaches/${beachId}`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
 
-
-router.post('/beaches/:beachId/addFav', async (req, res, next) => {
-    
+//ADD TO FAVS
+router.post("/beaches/:beachId/addFavs", async (req, res, next) => {
   const { beachId } = req.params;
   const userProfile = req.session.currentUser._id;
 
   try {
-      await User.findByIdAndUpdate(userProfile, { $push: { favorites: beachId }});
+    const addedBeach = await Beach.findById(beachId);
+    const user = await User.findById(userProfile);
 
-      res.redirect(`/userprofile`);
+    user.favorites.push(addedBeach._id);
 
+    await user.save();
+
+    res.redirect("/userprofile");
   } catch (error) {
-      console.log(error);
-      next(error);
+    console.log(error);
+    next(error);
   }
 });
+
+/* async function findBeachFromDb() {
+  try {
+    // Find all the users
+    const users = await User.find();
+    // Finding the Beach via Id
+    let foundBeach = await Beach.findById(beach_id).populate({
+      path: "reviews",
+      populate: {
+        path: "author",
+        model: "User",
+      }, */
+
+// POST to user profile
+router.post('/userprofile', async (req, res, next) => {
+  const userProfile = req.session.currentUser._id;
+
+  try {
+    const user = await User.findById(userProfile).populate({
+      path:'favorites',
+      model: "Beach"});
+    const favoriteBeaches = user.favorites;
+
+    res.redirect('userprofile', { favorites: favoriteBeaches });
+
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
 
 
 module.exports = router;
