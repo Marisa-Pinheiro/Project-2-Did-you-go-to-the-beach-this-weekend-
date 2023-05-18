@@ -25,7 +25,7 @@ body {
 .dropbtn {
   background-color: #337680;
   color: white;
-  padding: 16px;
+  padding: 5px;
   font-size: 20px;
   border: none;
 }
@@ -76,8 +76,7 @@ body {
   text-decoration: none;
   font-size: 20px;
 }
-
-#homepage {
+#homepage-background-image{
   width: 1512px;
   height: 855px;
   background-image: url(/images/homepage-image.jpeg);
@@ -87,7 +86,6 @@ body {
   align-self: center;
   z-index: -1;
 }
-
 .first-page-text {
   width: 575px;
   height: 163px;
@@ -111,6 +109,7 @@ body {
   margin-top: 0;
   font-size: 18px;
   font-weight: 200;
+  color: #4b5d60;
 }
 .homepage-sudo-buttons {
   display: flex;
@@ -351,16 +350,52 @@ body {
 
 #user-profile h2{
   font-weight: 300;
-  font-size: 56px;
-
+  font-size: 46px;
+  margin-top: 0;
+}
+.user-actions button{
+  margin-right: 7%;
+  text-decoration: none;
+  color: #ffffff;
+  padding: 5px 15px;
+  background-color:#E8AA42;
+  border-radius: 5px;
+}
+#logout-form{
+  margin-right: 25px;
 }
 
 .user-details{
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 80%;
+  justify-content: center;
+ 
+}
+.user-picture{
+  width: 30%;
+  display: flex;
   flex-direction: column;
-  flex-wrap: nowrap;
+  align-items: center;
+}
+.user-picture h5{
+  margin-top: 0;
+  font-size: 20;
+  font-weight: 200;
+
+
+}
+.user-info{
+  width: 50%;
+  padding-left: 2%;
+ 
 }
 
+.user-info h5 {
+  font-size: 20;
+  font-weight: 200;
+}
 .user-details h4{
  font-weight: 200;
  font-size: 26px;
@@ -380,7 +415,7 @@ body {
   align-items: center;
   margin-top: 70px;
 }
-.beach-changes{
+.beach-changes, .user-actions{
   display: flex;
   width: 100%;
   flex-direction: row;
@@ -441,7 +476,7 @@ body {
   font-size: 15px;
   border-radius: 5px;
 }
-.beach-review{
+.beach-review, #image-gallery{
   width: 80%;
   margin-top: 2%;
   display: flex;
@@ -454,13 +489,12 @@ body {
   font-size: 15px;
   font-weight: 300;
 }
-.beach-review h4{
+.beach-review h4, #image-gallery h4{
   font-weight: 400;
   margin: 0;
-
 }
 
-.beach-review button {
+.beach-review button, #submit {
   color: #ffffff;
   width: 140px;
   height: 37px;
@@ -491,6 +525,14 @@ body {
   margin-left: 7.5px;
   margin-top: 5px;
   margin-bottom: 10px;
+}
 
+#gallery {
+  display: flex;
+  flex-direction: row;
+}
+
+#gallery img {
+  margin: 20px 10px 0px 0px;
 }
 

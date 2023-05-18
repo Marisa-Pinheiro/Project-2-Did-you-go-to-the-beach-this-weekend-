@@ -14,7 +14,7 @@
 
  {{#if isFav}}
         <form action="/beaches/{{beach._id}}/removeFavs" method="get">
-          <button type="submit">Remove from my favourite List</button>
+          <button type="submit">Remove from favourites </button>
         </form>
       {{else}}
         <form action="/beaches/{{beach._id}}/addFavs" method="post">
@@ -36,12 +36,6 @@
 
 <!-- Form to Create a Review -->
 <form action="/review/create/{{beach._id}}" method="post">
-  <!-- <select name="author">
-    {{#each users}}
-      <option value="{{_id}}">{{username}}</option>
-    {{/each}}
-    <br>
-  </select>-->
   <br>
   <label for="content">Content</label>
   <br>
@@ -55,7 +49,7 @@
 <br>
 
 
-<!-- Display all the Reviews of the Book that we're seeing -->
+<!-- Display all the Reviews  -->
 {{#each beach.reviews}}
   <div>
     <!-- Actually displaying the review -->
@@ -72,7 +66,18 @@
 <br>
 
 <!--- Beach Gallery -->
+<div id="image-gallery">
+  <div>
+    <form method="POST" action="/beaches/{{beach._id}}/addimage" enctype="multipart/form-data">
+    <label>Add your image:</label>
+        <input type="file" name="new-beach-image"/>
+        <input type="hidden" name="existingImage" value="{{beach.imageUrl}}">
+        <br>
+        <input type="submit" id="submit">
+    </form>
+</div>
 <h4 id="beachName" data-id="{{beach.id}}">{{beach.name}} photo gallery</h4>
+<div id="gallery">
 {{#if beach.gallery}}
   {{#each beach.gallery}}
   <img src="{{this}}" alt="{{beach.name}}" width="300" height="200">
@@ -80,15 +85,7 @@
 {{else}}
   <p>There are no photos, add yours!</p>
 {{/if}}
-
+</div>
 <br>
-
-<div>
-    <form method="POST" action="/beaches/{{beach._id}}/addimage" enctype="multipart/form-data">
-    <label>Add your image:</label>
-        <input type="file" name="new-beach-image"/>
-        <input type="hidden" name="existingImage" value="{{beach.imageUrl}}">
-        <input type="submit" id="submit">
-    </form>
 </div>
 </body>

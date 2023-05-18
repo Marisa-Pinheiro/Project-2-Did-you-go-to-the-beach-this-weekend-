@@ -242,18 +242,6 @@ router.post("/beaches/:beachId/addFavs", async (req, res, next) => {
   }
 });
 
-/* async function findBeachFromDb() {
-  try {
-    // Find all the users
-    const users = await User.find();
-    // Finding the Beach via Id
-    let foundBeach = await Beach.findById(beach_id).populate({
-      path: "reviews",
-      populate: {
-        path: "author",
-        model: "User",
-      }, */
-
 // POST to user profile
 router.post('/userprofile', async (req, res, next) => {
   const userProfile = req.session.currentUser._id;
@@ -271,7 +259,6 @@ router.post('/userprofile', async (req, res, next) => {
     next(error);
   }
 });
-
 
 
 module.exports = router;
