@@ -9,18 +9,34 @@
       <input type="text" name="name" placeholder="Name" />
       <br />
       <label>Description:</label><br />
-      <input type="text" name="description" placeholder="Description" /><br />
+        <input type="text" name="description" placeholder="Description" /><br />
       <label>Best Activity</label><br />
-      <input type="text" name="best activity" placeholder="Activity" /><br />
+        <select name="best activity">
+          <option value="">Select an activity</option>
+          <option value="hiking">Hiking</option>
+          <option value="swimming">Swimming</option>
+          <option value="surfing">Surfing</option>
+          <option value="bodyboarding">Bodyboarding</option>
+          <option value="beachvollyball">Beach Vollyball</option>
+        </select> <br/>
+        <br>
       <label>Rate</label><br />
-      <input type="Number" name="Rate" min="0" max="5" placeholder="Rate" /><br />
+        <select name="Rate">
+          <option value="">Your rate</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select> <br/>
+        <br>
       <lable>Address</lable><br />
-      <input type="text" name="latitude" placeholder="Latitude" />
+        <input type="text" name="latitude" placeholder="Latitude" />
       <input type="text" name="longitude" placeholder="Longitude" /><br />
       <label>Image:</label><br />
-      <br />
-      <input type="file" name="beach-image" /><br />
-      <div class="new-beach-submit">
+        <br>
+        <input type="file" name="beach-image" /><br />
+          <div class="new-beach-submit">
         <button type="submit" id="submit">Submit</button>
       </div>
     </form>
