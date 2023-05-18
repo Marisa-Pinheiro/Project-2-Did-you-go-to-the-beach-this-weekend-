@@ -8,7 +8,9 @@
   <div class="central-beach-description">
   <div class="beach-image-favourites">
  <br>
+ <img src="{{beach.imageUrl}}">
  <!-- Fav Beach -->
+
  {{#if isFav}}
         <form action="/beaches/{{beach._id}}/removeFavs" method="post">
           <button type="submit">Remove from my favourite List</button>
@@ -68,7 +70,7 @@
 
 <!--- Beach Gallery -->
 <h4 id="beachName" data-id="{{beach.id}}">{{beach.name}} photo gallery</h4>
-<img src="{{beach.imageUrl}}" alt="{{beach.name}}" width="300" height="200">
+<img src="{{beach.gallery}}" alt="{{beach.name}}" width="300" height="200">
 
 <br>
 

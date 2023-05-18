@@ -474,7 +474,9 @@ body {
   color:#E8AA42;
 }
 
-#information-to-update button{
+.update-beach-button{
+  display: flex;
+  justify-content: center;
 
 
 }

@@ -148,8 +148,8 @@ router.get('/userprofile', (req, res)=>{
   res.render('user/userprofile.hbs', {userInSession: req.session.currentUser});
 });
 
-// GET /auth/logout
-router.get("/logout", isLoggedIn, (req, res) => {
+// POST /auth/logout
+router.post("/logout", isLoggedIn, (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       res.status(500).render("auth/logout", { errorMessage: err.message });
@@ -157,6 +157,17 @@ router.get("/logout", isLoggedIn, (req, res) => {
     }
     res.redirect("/");
   });
+});
+
+// DELETE => remove the user from the DB
+router.get("/userprogile/:user_id/delete", async (req, res) => {
+  const { user_id } = req.params;
+  try {
+    await User.findByIdAndRemove(user_id);
+    res.redirect("/");
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 
