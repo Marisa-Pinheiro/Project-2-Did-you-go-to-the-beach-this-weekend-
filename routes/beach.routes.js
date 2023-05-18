@@ -18,13 +18,13 @@ router.get("/new", (req, res) => {
   res.render("beaches/new-beach.hbs");
 });
 
-// POST => to create new restaurant and save it to the DB
+// POST => to create new Beach and save it to the DB
 router.post("/new", fileUploader.single('beach-image'), (req, res) => {
-  // add location object here
-  const { longitude, latitude, rate, activity, name, description} = req.body;
+  const { name, description, rate, activity, longitude, latitude } = req.body;
 
   async function createBeach() {
     try {
+      //const currentUser = req.session.currentUser._id;
       await Beach.create({
         name,
         description,
@@ -97,6 +97,7 @@ router.get("/beaches/:beach_id/delete", async (req, res, next) => {
 // GET route to retrieve and display details of a specific Beach
 router.get("/beaches/:beach_id", (req, res) => {
   const { beach_id } = req.params;
+
   async function findBeachFromDb() {
     try {
       // Find all the users
@@ -180,33 +181,58 @@ router.post("/review/delete/:review_id/:beachId", (req, res) => {
 
 
 // GET route to display a form to Add Image to Beach
-router.get('/beaches/:beach_id/addimage', (req,res)=>{
-  res.render('beaches/new-img-beach.hbs');
+router.get('/beaches/:beachId/addimage', async (req,res)=>{
+  const { beachId } = req.params;
+  try {
+    const beach = await Beach.findById(beachId);
+  res.render('beaches/new-img-beach.hbs', {beach});
+  } catch (error) {
+  console.log(error);
+}
 }); 
 
-// POST Route to save the new Image to Beach data
-router.post('/beaches/:beach_id/addimage', fileUploader.single('new-beach-image'), (req,res) =>{
-  const {beach_id} = req.params; 
 
+// POST Route to save the new Image to Beach data
+router.post('/beaches/:beachId/addimage', fileUploader.single('new-beach-image'), async (req,res) =>{
+  const {beachId} = req.params;
   const {existingImage} = req.body;
 
   let imageUrl; 
+
   if(req.file){
       imageUrl = req.file.path;
   } else {
       imageUrl = existingImage;
   }
 
-  async function findBeachAndUpdate(){
       try{
-          await Beach.findByIdAndUpdate(beach_id, {imageUrl}, {new: true});
-          res.redirect(`/beaches/${beach_id}`);
+          await Beach.findByIdAndUpdate(beachId, {imageUrl}, {new: true});
+          res.redirect(`/beaches/${beachId}`);
       }
       catch(error){
           console.log(error);
       }
+});
+
+
+
+
+
+router.post('/beaches/:beachId/addFav', async (req, res, next) => {
+    
+  const { beachId } = req.params;
+  const userProfile = req.session.currentUser._id;
+
+  try {
+      await User.findByIdAndUpdate(userProfile, { $push: { favorites: beachId }});
+
+      res.redirect(`/userprofile`);
+
+  } catch (error) {
+      console.log(error);
+      next(error);
   }
-  findBeachAndUpdate();
-})
+});
+
 
 module.exports = router;

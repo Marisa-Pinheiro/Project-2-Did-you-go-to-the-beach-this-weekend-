@@ -306,3 +306,73 @@ body {
   border: 2px solid rgb(199, 198, 198);
   margin: 10px 20px;
 }
+.beach-picture{
+  height: 255px;
+  width: 255px;
+}
+.beach-info {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+
+}
+.beach-info a {
+  text-decoration: none;
+  color: #000000;
+  text-align: center;
+}
+.beach-actions{
+  display: flex;
+  flex-direction: row;
+  justify-content:space-around;
+  justify-items: center;
+  margin-top: 5px;
+}
+
+.beach-info a {
+  text-decoration: none;
+  color: #000000;
+  text-align: center;
+}
+
+.beach-info a:hover {
+  text-decoration: none;
+  color:#E8AA42
+}
+
+#user-profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 70px;
+}
+
+#user-profile h2{
+  font-weight: 300;
+  font-size: 56px;
+
+}
+
+.user-details{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.user-details h4{
+ font-weight: 200;
+ font-size: 26px;
+}
+
+.user-actions{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: ;
+  justify-items: center;
+  margin: 20px;
+
+}
+

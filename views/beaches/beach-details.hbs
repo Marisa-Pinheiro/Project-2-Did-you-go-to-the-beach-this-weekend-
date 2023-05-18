@@ -4,6 +4,21 @@
 <p>{{beach.description}}</p>
 
 <br />
+
+<!-- Fav Beach -->
+<div>
+  {{#if isFav}}
+        <form action="/beaches/{{beach._id}}/removeFavs" method="post">
+          <button type="submit">Remove from my favourite List</button>
+        </form>
+      {{else}}
+        <form action="/beaches/{{beach._id}}/addFavs" method="post">
+          <button type="submit">Add to my favourite List</button>
+        </form>
+      {{/if}}
+</div>
+<br>
+
 <!-- Review Section -->
 <h4>Leave a Review!</h4>
 
@@ -20,7 +35,7 @@
 </form>
 <!-- End of the Form to Create a Review -->
 
-<br />
+<br>
 
 
 <!-- Display all the Reviews of the Book that we're seeing -->
@@ -35,9 +50,11 @@
   </div>
 {{/each}}
 
+<br>
 <!--- Beach Gallery -->
+{{#each beach.imageUrl}}
 <img src="{{beach.imageUl}}" alt="{{beach.name}}" width="300" height="200">
-
+{{/each}}
 <br>
 
 <!--- add Image to Beach -->

@@ -6,12 +6,15 @@
 <div id="index-cards">
   {{#each beaches}}
     <div id="list-beaches-cards">
-
+<div class="beach-picture"></div>
+<div class="beach-info">
       <a href="/beaches/{{this._id}}">{{name}}</a>
-      |
+      <br>
+      <div class="beach-actions">
       <a href="/beaches/{{this._id}}/delete">Delete</a>
-      |
       <a href="/beaches/{{this._id}}/edit">Edit</a>
+      </div>
+      </div>
   </div>  
   {{/each}}
 </div>

@@ -22,7 +22,7 @@ module.exports = app =>{
                 sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // ternary operators --> make conditions
                 secure: process.env.NODE_ENV === 'production', // https instead http
                 httpOnly: true, 
-                maxAge: 60000, // 60 * 1000ms  === 1 min
+                maxAge: 600000, // 600 * 1000ms  === 10 min
             }, 
             store: MongoStore.create({
                 mongoUrl: process.env.MONGODB_URI || 'mongodb://localhost/basic-auth'

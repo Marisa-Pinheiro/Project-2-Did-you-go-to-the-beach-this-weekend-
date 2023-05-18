@@ -1,15 +1,36 @@
-{{#if userInSession}}
-<h2>Welcome, {{userInSession.username}}</h2>
-<p>This is your profile!</p>
-<button>
-    <a href="/userprofile">Reload the page</a>
-            <form id="logout-form" action="/logout" method="POST">
-          <button>Logout</button>
-        </form>
+<body id="user-profile">
+  {{#if userInSession}}
+    <div>
+      <h2>Welcome, {{userInSession.username}}</h2>
+    </div>
+    <div class="user-details">
+      <div class="user-picture">
+        <h4>{{userInSession.username}}</h4>
 
-         <a href="/userprofile">Profile</a>
-</button>
-{{else}}
-<br> <!-- stands for a new line break -->
-<p>Still no logged in user</p>
-{{/if}}
+      </div>
+      <div class="user-info">
+        <h5>Your Favourite beaches:</h5>
+        <ul>
+          {{#each user.favorites}}
+            <li>
+              <a href="/beaches/{{beach._id}}">{{name}}</a>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+    <div class="user-actions">
+      <button>
+        <a href="/userprofile">Reload the page</a>
+
+      </button>
+      <form id="logout-form" action="/logout" method="POST">
+        <button>Logout</button>
+      </form>
+    </div>
+  {{else}}
+    <br />
+    <!-- stands for a new line break -->
+    <p>Still no logged in user</p>
+  {{/if}}
+</body>
