@@ -224,14 +224,14 @@ body {
   justify-content: space-around;
   align-items: center;
 }
-#create-new-beach {
+#create-new-beach, #update-beach {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 40px;
 }
 
-#new-beach {
+#new-beach, #information-to-update {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -239,14 +239,14 @@ body {
   padding: 10px;
 }
 
-#new-beach input {
+#new-beach input, #information-to-update input {
   width: 200px;
   height: 37px;
   margin-bottom: 10px;
   border: #000000;
 }
 
-#new-beach button {
+#new-beach button, #information-to-update button {
   color: #ffffff;
   width: 118px;
   height: 37px;
@@ -257,7 +257,7 @@ body {
   align-self: center;
 }
 
-#new-beach label {
+#new-beach label, #information-to-update label {
   font-size: 20;
   color: #000000;
   padding-bottom: 20px;
@@ -271,7 +271,7 @@ body {
   text-align: center;
   margin: 5px;
 }
-#new-beach h5 {
+#new-beach h5, #information-to-update h5 {
   font-size: 25;
   font-weight: 300;
   padding: 0;
@@ -472,4 +472,9 @@ body {
 
 .beach-review button:hover {
   color:#E8AA42;
+}
+
+#information-to-update button{
+
+
 }

@@ -8,7 +8,6 @@ const reviewSchema = new Schema(
         ref: 'User'
     },
   content: String,
-  pictures: [String]
 })
 
 const Review = model("Review", reviewSchema);

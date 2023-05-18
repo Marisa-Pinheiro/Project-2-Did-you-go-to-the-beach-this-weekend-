@@ -65,10 +65,19 @@
 {{/each}}
 </div>
 <br>
+
 <!--- Beach Gallery -->
-{{#each beach.imageUrl}}
-<img src="{{beach.imageUl}}" alt="{{beach.name}}" width="300" height="200">
-{{/each}}
+<h4 id="beachName" data-id="{{beach.id}}">{{beach.name}} photo gallery</h4>
+<img src="{{beach.imageUrl}}" alt="{{beach.name}}" width="300" height="200">
+
 <br>
 
+<div>
+    <form method="POST" action="/beaches/{{beach._id}}/addimage" enctype="multipart/form-data">
+    <label>Add your image:</label>
+        <input type="file" name="new-beach-image"/>
+        <input type="hidden" name="existingImage" value="{{beach.imageUrl}}">
+        <input type="submit" id="submit">
+    </form>
+</div>
 </body>

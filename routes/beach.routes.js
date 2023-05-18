@@ -71,12 +71,20 @@ router.get("/beaches/:beach_id/edit", async (req, res) => {
 });
 
 // POST => save updates in the database
-router.post("/beaches/:beach_id/edit", async (req, res, next) => {
+router.post("/beaches/:beach_id/edit", fileUploader.single('beach-image'), async (req, res, next) => {
   const { beach_id } = req.params;
-  const { name, description } = req.body;
+  const { name, description, existingImage} = req.body;
+
+  let imageUrl;
+
+  if(req.file){
+    imageUrl = req.file.path;
+} else {
+    imageUrl = existingImage;
+}
 
   try {
-    await Beach.findByIdAndUpdate(beach_id, { name, description });
+    await Beach.findByIdAndUpdate(beach_id, { name, description, imageUrl });
     res.redirect(`/beaches`);
   } catch (error) {
     console.log(error);
@@ -84,7 +92,7 @@ router.post("/beaches/:beach_id/edit", async (req, res, next) => {
 });
 
 // DELETE => remove the beach from the DB
-router.get("/beaches/:beach_id/delete", async (req, res, next) => {
+router.get("/beaches/:beach_id/delete", async (req, res) => {
   const { beach_id } = req.params;
   try {
     await Beach.findByIdAndRemove(beach_id);
@@ -126,23 +134,17 @@ router.post("/review/create/:beach_id", (req, res) => {
   async function createReviewinDb() {
     try {
       // Create the Review
-      const newReview = await Review.create({ content, author });
+      const newReview = await Review.create({ content, author: req.session.currentUser});
 
       // Add the Review to the Beach
       const beachUpdate = await Beach.findByIdAndUpdate(
         beach_id,
         { $push: { reviews: newReview._id } },
         { new: true } // Add { new: true } to return the updated document
-      ).populate({
-        path: "reviews",
-        populate: {
-          path: "author",
-          model: "User",
-        },
-      });
+      );
        
       // Add the Review to the User
-      const userUpdate = await User.findByIdAndUpdate(author, {
+      const userUpdate = await User.findByIdAndUpdate(req.session.currentUser, {
         $push: { reviews: newReview._id },
       }); 
 
@@ -197,16 +199,12 @@ router.post('/beaches/:beachId/addimage', fileUploader.single('new-beach-image')
   const {beachId} = req.params;
   const {existingImage} = req.body;
 
-  let imageUrl; 
+  let image; 
+  image = req.file.path;
 
-  if(req.file){
-      imageUrl = req.file.path;
-  } else {
-      imageUrl = existingImage;
-  }
 
       try{
-          await Beach.findByIdAndUpdate(beachId, {imageUrl}, {new: true});
+          await Beach.findByIdAndUpdate(beachId, {$push: {gallery: image}}, {new: true});
           res.redirect(`/beaches/${beachId}`);
       }
       catch(error){
