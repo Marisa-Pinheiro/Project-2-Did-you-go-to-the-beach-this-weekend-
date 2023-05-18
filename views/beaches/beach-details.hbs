@@ -1,36 +1,50 @@
 <!-- beach-details.hbs -->
-
-<h3 id="beachName" data-id="{{beach.id}}">{{beach.name}}</h3>
-<p>{{beach.description}}</p>
-
-<br />
-
-<!-- Fav Beach -->
-<div>
-  {{#if isFav}}
+<body id="beach-details">
+  <div class="beach-changes">
+    <a href="/beaches/{{beach._id}}/edit">Edit</a>
+    <a href="/beaches/{{beach._id}}/addimage">Add image</a>
+    
+  </div>
+  <div class="central-beach-description">
+  <div class="beach-image-favourites">
+ <br>
+ <!-- Fav Beach -->
+ {{#if isFav}}
         <form action="/beaches/{{beach._id}}/removeFavs" method="post">
           <button type="submit">Remove from my favourite List</button>
         </form>
       {{else}}
         <form action="/beaches/{{beach._id}}/addFavs" method="post">
-          <button type="submit">Add to my favourite List</button>
+          <button type="submit">Add to favourites</button>
         </form>
       {{/if}}
-</div>
-<br>
+  </div>
+  <div class="beach-detail-information">
+<h3 id="beachName" data-id="{{beach.id}}">{{beach.name}}</h3>
+<p>{{beach.description}}</p>
 
+<p class="rate">Rate: {{beach.rating}}</p>
+</div>
+</div>
+
+<div class="beach-review">
 <!-- Review Section -->
 <h4>Leave a Review!</h4>
 
 <!-- Form to Create a Review -->
 <form action="/review/create/{{beach._id}}" method="post">
-  <select name="author">
+  <!-- <select name="author">
     {{#each users}}
       <option value="{{_id}}">{{username}}</option>
     {{/each}}
-  </select>
+    <br>
+  </select>-->
+  <br>
   <label for="content">Content</label>
-  <textarea name="content" id="content" cols="30" rows="5"></textarea>
+  <br>
+ 
+  <textarea name="content" id="content" cols="80" rows="5"></textarea>
+  <br>
   <button type="submit">Create the review</button>
 </form>
 <!-- End of the Form to Create a Review -->
@@ -42,14 +56,14 @@
 {{#each beach.reviews}}
   <div>
     <!-- Actually displaying the review -->
-    <p><span>By {{author.username}}</span>: {{content}}</p>
+    <p><span>By {{author.username}}:</span> {{content}}</p>
     <!-- Deleting the Review -->
     <form action="/review/delete/{{_id}}/{{../beach._id}}" method="post">
       <button type="submit">Delete</button>
     </form>
   </div>
 {{/each}}
-
+</div>
 <br>
 <!--- Beach Gallery -->
 {{#each beach.imageUrl}}
@@ -57,9 +71,4 @@
 {{/each}}
 <br>
 
-<!--- add Image to Beach -->
-<a href="/beaches/{{beach._id}}/addimage">Add your image this beach</a>
-<br>
-<a href="/beaches/{{beach._id}}/edit">Edit this beach</a>
-<br>
-<a href="/beaches">Go back to the list</a>
+</body>

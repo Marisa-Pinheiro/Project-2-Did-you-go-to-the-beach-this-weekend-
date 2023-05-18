@@ -373,6 +373,103 @@ body {
   justify-content: ;
   justify-items: center;
   margin: 20px;
+}
+
+#beach-details, #update-beach {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 70px;
+}
+.beach-changes{
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: end;
+  margin-right: 3%;
+}
+.beach-changes a{
+  margin-left: 1%;
+  text-decoration: none;
+  color: #ffffff;
+  padding: 5px 15px;
+  background-color:#E8AA42;
+  border-radius: 5px;
+}
+.beach-changes a:hover, .beach-image-favourites button:hover {
+  color: black;
+}
+
+.central-beach-description{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.beach-image-favourites{
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items:end;
+}
+.beach-detail-information{
+  width: 60%;
+  padding-left: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.beach-detail-information p {
+  width: 60%;
+  text-align: justify;
+  font-weight: 200;
+}
+.beach-detail-information h3{
+  font-weight: 300;
+  font-style: italic;
+  font-size: 30;
+  margin-bottom: 0;
+}
+
+.beach-image-favourites button{
+  color: #ffffff;
+  width: 170px;
+  height: 37px;
+  border-style: none;
+  background-color:#E8AA42;
+  font-size: 15px;
+  border-radius: 5px;
+}
+.beach-review{
+  width: 80%;
+  margin-top: 2%;
+  display: flex;
+  flex-direction: column;
+  padding: 2%;
+  padding-bottom: 0;
+  border-top: 1px solid rgb(162, 162, 162);
+}
+.beach-review label {
+  font-size: 15px;
+  font-weight: 300;
+}
+.beach-review h4{
+  font-weight: 400;
+  margin: 0;
 
 }
 
+.beach-review button {
+  color: #ffffff;
+  width: 140px;
+  height: 37px;
+  border-style: none;
+  background-color:#337680;
+  font-size: 15px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.beach-review button:hover {
+  color:#E8AA42;
+}

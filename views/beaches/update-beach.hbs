@@ -1,16 +1,18 @@
+<body id="update-beach">
 <!-- update-beach.hbs -->  
-  <h3>Edit Beach {{beach.name}}</h3>
+  <h3>Edit Beach: {{beach.name}}</h3>
 <form method="POST" action="/beaches/{{beach._id}}/edit">
     <label>Name:</label>
-    <input type="" name="name" placeholder="Name" value="{{beach.name}}">
+    <input type="" name="name" placeholder="Name" value="{{beach.name}}"> <br>
     <label>Description:</label>
-    <input type="" name="description" placeholder="Description" value="{{beach.description}}">
+    <input type="" name="description" placeholder="Description" value="{{beach.description}}"> <br>
     <label>Best Activity</label>
-    <input type="text" name="best activity" placeholder="activity" value="{{beach.activity}}">
+    <input type="text" name="best activity" placeholder="activity" value="{{beach.activity}}"><br>
     <label>Rate</label>
-    <input type="Number" name="Rate" placeholder="Rate" value="{{beach.rate}}">
+    <input type="Number" name="Rate" placeholder="Rate" value="{{beach.rate}}"><br>
     <label>Address</label>
         <input type="text" name="latitude" id="latitude" placeholder="Latitude" value="{{beach.location.coordinates.[1]}}">
-        <input type="text" name="longitude" id="longitude" placeholder="Longitude" value="{{beach.location.coordinates.[0]}}">
+        <input type="text" name="longitude" id="longitude" placeholder="Longitude" value="{{beach.location.coordinates.[0]}}"><br>
     <button type="submit" name="" id="submit">Edit</button>
 </form>
+</body>
