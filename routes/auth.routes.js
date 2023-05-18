@@ -159,8 +159,8 @@ router.post("/logout", isLoggedIn, (req, res) => {
   });
 });
 
-// DELETE => remove the user from the DB
-router.get("/userprogile/:user_id/delete", async (req, res) => {
+/* // DELETE => remove the user from the DB
+router.get("/userprofile/:user_id/delete", async (req, res) => {
   const { user_id } = req.params;
   try {
     await User.findByIdAndRemove(user_id);
@@ -168,7 +168,7 @@ router.get("/userprogile/:user_id/delete", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-});
+}); */
 
 
 

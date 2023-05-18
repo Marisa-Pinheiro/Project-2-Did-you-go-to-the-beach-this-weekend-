@@ -23,12 +23,17 @@
       <form id="logout-form" action="/logout" method="POST">
         <button>Logout</button>
       </form>
-    
+      {{#each user}}
       <a href="/userprofile/{{this._id}}/delete">Delete</a>
-    
+      {{/each}}
     </div>
+  {{else}}
     <br />
     <!-- stands for a new line break -->
     <p>Still no logged in user</p>
   {{/if}}
+
+       <!--{{#each user}}
+      <a href="/userprofile/{{this._id}}/delete">Delete</a>
+      {{/each}}-->
 </body>

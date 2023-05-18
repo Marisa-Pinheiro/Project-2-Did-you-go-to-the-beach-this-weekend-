@@ -410,7 +410,9 @@ body {
   width: 40%;
   display: flex;
   justify-content: center;
-  align-items:end;
+  margin-left: 10%;
+  flex-direction: column;
+
 }
 .beach-detail-information{
   width: 60%;
@@ -477,6 +479,19 @@ body {
 .update-beach-button{
   display: flex;
   justify-content: center;
+}
 
+.beach-image-favourites form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.beach-picture{
+  display: flex;
+  justify-items: center;
+  margin-left: 7.5px;
+  margin-top: 5px;
+  margin-bottom: 10px;
 
 }
+
