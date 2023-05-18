@@ -59,7 +59,9 @@
 {{#each beach.reviews}}
   <div>
     <!-- Actually displaying the review -->
-    <p><span>By {{author.username}}:</span> {{content}}</p>
+    <p><b>By {{author.username}}:</b>
+      <br>
+     {{content}}</p>
     <!-- Deleting the Review -->
     <form action="/review/delete/{{_id}}/{{../beach._id}}" method="post">
       <button type="submit">Delete</button>
@@ -71,7 +73,13 @@
 
 <!--- Beach Gallery -->
 <h4 id="beachName" data-id="{{beach.id}}">{{beach.name}} photo gallery</h4>
-<img src="{{beach.gallery}}" alt="{{beach.name}}" width="300" height="200">
+{{#if beach.gallery}}
+  {{#each beach.gallery}}
+  <img src="{{this}}" alt="{{beach.name}}" width="300" height="200">
+  {{/each}}
+{{else}}
+  <p>There are no photos, add yours!</p>
+{{/if}}
 
 <br>
 

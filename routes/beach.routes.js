@@ -197,7 +197,6 @@ router.get('/beaches/:beachId/addimage', async (req,res)=>{
 // POST Route to save the new Image to Beach data
 router.post('/beaches/:beachId/addimage', fileUploader.single('new-beach-image'), async (req,res) =>{
   const {beachId} = req.params;
-  const {existingImage} = req.body;
 
   let image; 
   image = req.file.path;
