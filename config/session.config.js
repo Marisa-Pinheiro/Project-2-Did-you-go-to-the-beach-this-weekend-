@@ -25,7 +25,7 @@ module.exports = app =>{
                 maxAge: 600000, // 600 * 1000ms  === 10 min
             }, 
             store: MongoStore.create({
-                mongoUrl: process.env.MONGODB_URI || 'mongodb://localhost/basic-auth'
+                mongoUrl:`mongodb+srv://Marisa-Pinheiro:${process.env.MONGODB_PASSWORD}@did-you-go-to-the-beach.04xylms.mongodb.net/?retryWrites=true&w=majority`
             })
         })
     )
