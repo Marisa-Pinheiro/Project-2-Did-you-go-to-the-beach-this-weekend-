@@ -2,7 +2,7 @@
 <body id="beach-details">
   <div class="beach-changes">
     <a href="/beaches/{{beach._id}}/edit">Edit</a>
-    <a href="/beaches/{{beach._id}}/addimage">Add image</a>
+
     
   </div>
   <div class="central-beach-description">
@@ -15,10 +15,12 @@
  {{#if isFav}}
         <form action="/beaches/{{beach._id}}/removeFavs" method="get">
           <button type="submit">Remove from favourites </button>
+     
         </form>
       {{else}}
         <form action="/beaches/{{beach._id}}/addFavs" method="post">
           <button type="submit">Add to favourites</button>
+        
         </form>
       {{/if}}
   </div>
