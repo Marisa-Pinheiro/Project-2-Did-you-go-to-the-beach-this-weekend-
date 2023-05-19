@@ -242,8 +242,8 @@ router.post("/beaches/:beachId/addFavs", async (req, res, next) => {
   }
 });
 
-// POST to user profile
-router.post('/userprofile', async (req, res, next) => {
+/* // GET to user profile
+router.get('/userprofile', async (req, res, next) => {
   const userProfile = req.session.currentUser._id;
 
   try {
@@ -252,13 +252,17 @@ router.post('/userprofile', async (req, res, next) => {
       model: "Beach"});
     const favoriteBeaches = user.favorites;
 
-    res.redirect('userprofile', { favorites: favoriteBeaches });
+    res.render('user/userprofile', { favorites: favoriteBeaches });
 
   } catch (error) {
     console.log(error);
     next(error);
   }
-});
+});  */
+
+
+
+
 
 
 module.exports = router;
