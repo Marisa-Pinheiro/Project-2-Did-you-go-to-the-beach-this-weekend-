@@ -28,7 +28,8 @@ const MongoStore = require("connect-mongo");
 // Connects the mongo uri to maintain the same naming structure
 const MONGO_URI =
  `mongodb+srv://Marisa-Pinheiro:${process.env.MONGODB_PASSWORD}@did-you-go-to-the-beach.04xylms.mongodb.net/?retryWrites=true&w=majority`
-// Middleware configuration
+
+ // Middleware configuration
 module.exports = (app) => {
   // In development environment the app logs
   app.use(logger("dev"));
