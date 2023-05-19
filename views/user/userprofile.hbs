@@ -3,41 +3,42 @@
     <div class="user-actions">
       <form id="logout-form" action="/logout" method="GET">
         <button>Logout</button>
-      </form> 
-<form id="delete-form" action="/userprofile/delete/{{userInSession._id}}" method="POST">
-  <button>Delete</button>
-</form>
-</div>  
+      </form>
+      <form
+        id="delete-form"
+        action="/userprofile/delete/{{userInSession._id}}"
+        method="POST"
+      >
+        <button>Delete</button>
+      </form>
+    </div>
     <div class="hello-user">
       <h2>Welcome, {{userInSession.username}}</h2>
     </div>
     <div class="user-details">
 
       <div class="user-picture">
-        <img src="/images/user-image.png" width="300">
+        <img src="/images/user-image.png" width="300" />
         <h5>{{userInSession.username}}</h5>
 
       </div>
       <div class="user-info">
-      <h5>Favourite beaches:</h5>
-<ul>
-  {{#each favorites}}
-    <li>
-      <a href="/beaches/{{this._id}}">{{this.name}}</a>
-    </li>
-  {{/each}}
-</ul>
+        <h5>Favourite beaches:</h5>
+        <ul>
+          {{#each userInSession.favorites}}
+            <li>
+              <a href="/beaches/{{this._id}}">{{this.name}}</a>
+            </li>
+          {{/each}}
+        </ul>
       </div>
     </div>
 
   {{else}}
-  
-    <!-- stands for a new line break -->
-    <p>Still no logged in user</p> 
-   
-   
-    {{/if}}
 
-     
-    
+    <!-- stands for a new line break -->
+    <p>Still no logged in user</p>
+
+  {{/if}}
+
 </body>

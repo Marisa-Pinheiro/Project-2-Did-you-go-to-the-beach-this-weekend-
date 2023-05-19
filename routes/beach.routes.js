@@ -242,27 +242,5 @@ router.post("/beaches/:beachId/addFavs", async (req, res, next) => {
   }
 });
 
-/* // GET to user profile
-router.get('/userprofile', async (req, res, next) => {
-  const userProfile = req.session.currentUser._id;
-
-  try {
-    const user = await User.findById(userProfile).populate({
-      path:'favorites',
-      model: "Beach"});
-    const favoriteBeaches = user.favorites;
-
-    res.render('user/userprofile', { favorites: favoriteBeaches });
-
-  } catch (error) {
-    console.log(error);
-    next(error);
-  }
-});  */
-
-
-
-
-
 
 module.exports = router;

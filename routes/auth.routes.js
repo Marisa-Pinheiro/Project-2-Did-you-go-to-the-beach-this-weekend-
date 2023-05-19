@@ -1,6 +1,6 @@
 // Require Express Method that helps us to create Routes
-// 2nd way of requiring Router 
-const {Router} = require('express');
+// 2nd way of requiring Router
+const { Router } = require("express");
 
 // ℹ️ Handles password encryption
 const bcrypt = require("bcrypt");
@@ -46,17 +46,15 @@ router.post("/signup", isLoggedOut, (req, res) => {
   }
 
   //! This regular expression checks password for special characters and minimum length
-  
+
   const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
   if (!regex.test(password)) {
-    res
-      .status(400)
-      .render("auth/signup", {
-        errorMessage: "Password needs to have at least 6 chars and must contain at least one number, one lowercase and one uppercase letter."
+    res.status(400).render("auth/signup", {
+      errorMessage:
+        "Password needs to have at least 6 chars and must contain at least one number, one lowercase and one uppercase letter.",
     });
     return;
   }
-
 
   // Create a new user - start by hashing the password
   bcrypt
@@ -144,10 +142,13 @@ router.post("/login", isLoggedOut, (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.get('/userprofile/', (req, res)=>{
-  res.render('user/userprofile.hbs', {userInSession: req.session.currentUser});
+router.get("/userprofile/", async (req, res) => {
+  const currentUser = await User.findById(req.session.currentUser._id).populate(
+    "favorites"
+  );
+console.log(currentUser)
+  res.render("user/userprofile.hbs", { userInSession: currentUser });
 });
-
 
 // POST /auth/logout
 router.get("/logout", isLoggedIn, (req, res) => {
@@ -160,26 +161,22 @@ router.get("/logout", isLoggedIn, (req, res) => {
   });
 });
 
-router.post('/userprofile/delete/:id', isLoggedIn, async (req, res, next) => {
-
+router.post("/userprofile/delete/:id", isLoggedIn, async (req, res, next) => {
   const { id } = req.params;
 
   try {
-      await User.findByIdAndRemove(id);
-      req.session.destroy((err) => {
-        if (err) {
-          res.status(500).render("auth/logout", { errorMessage: err.message });
-          return;
-        }
-        res.redirect("/");
-      });
-
+    await User.findByIdAndRemove(id);
+    req.session.destroy((err) => {
+      if (err) {
+        res.status(500).render("auth/logout", { errorMessage: err.message });
+        return;
+      }
+      res.redirect("/");
+    });
   } catch (error) {
-      console.log(error);
-      next(error);
+    console.log(error);
+    next(error);
   }
 });
-
-
 
 module.exports = router;
